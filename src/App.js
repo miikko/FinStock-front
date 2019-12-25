@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react"
+import { connect } from "react-redux"
+import { initializeStocks } from "./reducers/stocksReducer"
+import { initializePriceInfo } from "./reducers/priceInfoReducer"
+import StockFilter from "./components/stockFilter/StockFilter"
+import StockList from "./components/StockList"
 
-function App() {
+const App = (props) => {
+  const initStocks = props.initializeStocks
+  const initPriceInfo = props.initializePriceInfo
+
+  useEffect(() => {
+    initStocks()
+    initPriceInfo()
+  }, [initStocks, initPriceInfo])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>FinStock client</h1>
+      <StockFilter />
+      <StockList />
     </div>
-  );
+  )
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    stocks: state.stocks
+  }
+}
+
+export default connect(mapStateToProps, 
+  { initializeStocks, initializePriceInfo })(App)
