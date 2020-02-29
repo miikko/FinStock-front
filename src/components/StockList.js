@@ -41,6 +41,7 @@ const StockList = (props) => {
 
   return (
     <div>
+      <p>Stock information from year {lastYear}</p>
       <p>Prices updated {lastPriceUpdate}</p>
       {stocksToDisplay.length === 0
         ? <p>No stocks matched the given filters.</p>
